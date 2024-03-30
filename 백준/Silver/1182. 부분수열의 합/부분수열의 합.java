@@ -34,18 +34,7 @@ public class Main{
             cnt++;
         }
         for(int i = flag ;i<N;i++){
-            if(selec[i]){
-                Select(i);
                 dfs(exsum + x[i],i+1);
-                unSelect(i);
-            }
         }
-    }
-
-    public static void Select(int i){
-        selec[i] = false;
-    }
-    public static void unSelect(int i){
-        selec[i] = true;
     }
 }
