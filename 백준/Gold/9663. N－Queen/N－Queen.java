@@ -26,20 +26,19 @@ public class Main{
     }
 
     public static void dfs(int x, int y, int fcnt){
+        if(fcnt == N){
+            cnt++;
+            return;
+        }
         int iy = y;
-            for(int jx = 0 ;jx <N;jx++){
-                if(ganung(jx,iy,fcnt)){
-                    yual[fcnt] = iy;
-                    hap[fcnt] = iy + jx;
-                    hang[fcnt] = jx;
-                    if(fcnt == N-1){
-                        cnt++;
-                        return;
-                    }
-                    dfs(jx,iy+1,fcnt+1);
-                }
+        for(int jx = 0 ;jx <N;jx++){
+            if(ganung(jx,iy,fcnt)){
+                yual[fcnt] = iy;
+                hap[fcnt] = iy + jx;
+                hang[fcnt] = jx;
+                dfs(jx,iy+1,fcnt+1);
             }
-        
+        }
 
     }
 
