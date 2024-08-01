@@ -4,7 +4,7 @@ import java.math.*;
 import java.lang.*;
 
 public class Main{
-    static int jubsi, chobab, conti, c,max = 0, selec[],x[];
+    static int jubsi, chobab, conti, c,max = 0, selec[],x[],cnt = 1;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,42 +24,40 @@ public class Main{
             x[i] = Integer.parseInt(br.readLine());
         }
 
-        for(int i = 0 ;i<chobab+1;i++){
-            selec[i] = 300001;
+        int start = 0, end = conti;
+
+        selec[c]++;
+
+        for(int  i = start ;i<end;i++){
+            if(selec[x[i]] == 0){
+                cnt++;
+            }
+            selec[x[i]]++;
         }
 
-        dfs();
+        max =  Math.max(max ,cnt);
+
+        for(int  i =end;i<jubsi+conti-1;i++){
+            selec[x[start]]--;
+            
+            if(selec[x[start]] == 0){
+                cnt--;
+            }
+
+
+            if(selec[x[i % jubsi]] == 0){
+                cnt++;
+            }
+            selec[x[i%jubsi]]++;
+
+            max =  Math.max(max ,cnt);
+
+            start++;
+
+        }
 
         bw.write(String.valueOf(max));
         bw.flush();
-    }
-
-    public static void dfs(){
-
-        for(int  i = 0; i<jubsi;i++){
-            int cnt = 0, flag= 0;
-
-            for(int j = i; j < i+conti;j++){
-                if(selec[x[j % jubsi]] != i){
-                    cnt++;
-                }
-                selec[x[j % jubsi]] = i;
-
-                if(x[j % jubsi] == c){
-                    flag = 1;
-                }
-
-            }
-
-            if(flag != 1){
-                cnt++;
-            }
-
-            max = Math.max(max,cnt);
-
-
-        }
-
     }
 
 }
