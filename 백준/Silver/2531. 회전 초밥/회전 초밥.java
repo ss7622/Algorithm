@@ -28,13 +28,13 @@ public class Main{
             selec[i] = 300001;
         }
 
-        dfs(0);
+        dfs();
 
         bw.write(String.valueOf(max));
         bw.flush();
     }
 
-    public static void dfs(int depth){
+    public static void dfs(){
 
         for(int  i = 0; i<jubsi;i++){
             int cnt = 0, flag= 0;
