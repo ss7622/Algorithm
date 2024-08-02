@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 import java.math.*;
@@ -24,7 +25,7 @@ public class Main{
 
             x = a.toCharArray();
 
-            if(pael(x,0,x.length-1)){
+            if(pael()){
                 if(sosu(i)) {
                     bw.write(a);
                     bw.flush();
@@ -47,9 +48,9 @@ public class Main{
         return  true;
     }
 
-    static public boolean pael(char[] k, int left, int right){
-        for(int  i = 0 ; i<k.length/2;i++) {
-            if (k[i] != k[k.length-1-i]) {
+    static public boolean pael(){
+        for(int  i = 0 ; i<x.length/2;i++) {
+            if (x[i] != x[x.length-1-i]) {
                 return false;
             }
         }
