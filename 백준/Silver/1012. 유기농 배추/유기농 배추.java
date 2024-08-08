@@ -1,4 +1,3 @@
-
 import java.lang.*;
 import  java.io.*;
 import java.math.*;
@@ -6,7 +5,7 @@ import java.util.*;
 
 public class Main {
 
-    static int T,X,Y,K,baechu[][], cnt = 0, min= 999999999;
+    static int T,X,Y,K,baechu[][], cnt = 0;
     static int x[] = {0,0,0,1,-1}, y[] = {0,1,-1,0,0};
 
     public static void main(String args[])throws IOException{
@@ -32,7 +31,15 @@ public class Main {
                 baechu[b][a] = 1;
             }
 
-            dfs(baechu);
+            for(int k = 0 ;k<Y;k++){
+                for(int j = 0 ;j<X;j++){
+                    if(baechu[k][j] == 1){
+                        dfs(j,k);
+                        cnt++;
+                    }
+                }
+            }
+            
             bw.write(cnt + "\n");
             bw.flush();
 
@@ -43,33 +50,18 @@ public class Main {
 
     }
 
-
-
-    public static void dfs(int[][] bae){
-
-        for(int i = 0 ;i<Y;i++){
-            for(int j = 0 ;j<X;j++){
-                if(bae[i][j] == 1){
-                    change(j,i,bae);
-                    cnt++;
-                }
-            }
-        }
-    }
-
-    public static int[][] change(int xx, int yy, int[][] baech){
+    public static void dfs(int xx, int yy){
 
         for(int  i = 0 ;i<5;i++){
             int x1 = xx + x[i];
             int y1 = yy + y[i];
             if(x1 >= 0 && x1 < X && y1 >= 0 && y1 < Y){
-                if(baech[y1][x1] == 1) {
-                    baech[y1][x1] = 0;
-                    change(x1,y1,baech);
+                if(baechu[y1][x1] == 1) {
+                    baechu[y1][x1] = 0;
+                    dfs(x1,y1);
                 }
             }
         }
-        return baech;
     }
 
 }
