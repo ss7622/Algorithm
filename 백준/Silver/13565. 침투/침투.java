@@ -63,6 +63,9 @@ public class Main {
                 if(x[y1][x1] == 0 && !visited[y1][x1]){
                     visited[y1][x1] = true;
                     dfs(y1,x1);
+                    if(check == 1){
+                        break;
+                    }
                 }
             }
         }
