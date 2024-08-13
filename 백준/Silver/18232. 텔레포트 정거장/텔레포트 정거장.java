@@ -93,7 +93,6 @@ public class Main {
             ed.remove(0);
         }
 
-
         bfs(depth+1, edd);
 
     }
