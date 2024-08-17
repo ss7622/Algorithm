@@ -1,71 +1,67 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int N,M,cnt=0;
+    static int N, M, cnt = 0;
     static boolean visited[];
-    static List<ArrayList<int []>> edge = new ArrayList<>();
+    static List<ArrayList<Integer>> edge = new ArrayList<>();
 
-    public static void main(String args[])throws IOException {
+    public static void main(String args[]) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         N = Integer.parseInt(br.readLine());
         M = Integer.parseInt(br.readLine());
 
-        visited = new boolean[N+1];
+        visited = new boolean[N + 1];
 
-        for(int i =0;i<=N;i++){
+        for (int i = 0; i <= N; i++) {
             edge.add(new ArrayList<>());
         }
 
-        for(int i = 0 ;i<M;i++){
+        for (int i = 0; i < M; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
-            int b =Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
-            edge.get(a).add(new int[] {b,0});
-            edge.get(b).add(new int[] {a,0});
-
+            edge.get(a).add(b);
+            edge.get(b).add(a);
         }
 
         bfs();
 
         bw.write(String.valueOf(cnt));
         bw.flush();
-
-
     }
 
-    public static void bfs(){
-        ArrayList<int[]> ed = new ArrayList<>();
+    public static void bfs() {
+        Queue<int[]> queue = new LinkedList<>();
 
-        ed.add(new int[] {1,0});
+        queue.add(new int[] { 1, 0 });
         visited[1] = true;
 
-        while(!ed.isEmpty()){
-            for(int  i = 0 ;i<edge.get(ed.get(0)[0]).size();i++){
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int node = current[0];
+            int depth = current[1];
 
-                int k = edge.get(ed.get(0)[0]).get(i)[0];
-                int depth = ed.get(0)[1];
+            if (depth == 2) {
+                continue; // 깊이 2를 넘으면 탐색을 중지
+            }
 
-
-                if(0 <= depth &&  depth <= 1 && !visited[k]){
-                    cnt++;
-                }
-
-                if(!visited[k]){
-                    visited[k] = true;
-                    ed.add(new int[] {k,depth+1});
+            for (int neighbor : edge.get(node)) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.add(new int[] { neighbor, depth + 1 });
+                    if (depth == 1 || depth == 0) {
+                        cnt++; // 깊이 1인 노드들의 친구들만 카운트
+                    }
                 }
             }
-            ed.remove(0);
         }
     }
-
-
-
 }
