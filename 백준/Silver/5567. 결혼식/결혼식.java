@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int N,M,cnt=0;
-    static boolean visited[],result[];
+    static boolean visited[];
     static List<ArrayList<int []>> edge = new ArrayList<>();
 
     public static void main(String args[])throws IOException {
@@ -17,8 +17,6 @@ public class Main {
         M = Integer.parseInt(br.readLine());
 
         visited = new boolean[N+1];
-        result = new boolean[N+1];
-
 
         for(int i =0;i<=N;i++){
             edge.add(new ArrayList<>());
