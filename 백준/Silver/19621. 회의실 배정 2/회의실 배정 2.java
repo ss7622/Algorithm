@@ -6,7 +6,6 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int N,x[][], max = 0;
-    static boolean visited[];
 
     public static void main(String args[])throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,8 +14,6 @@ public class Main {
         N = Integer.parseInt(br.readLine());
 
         x = new int[N][3];
-        visited = new boolean[N];
-
         for(int  i = 0 ;i<N;i++){
             StringTokenizer st  = new StringTokenizer(br.readLine());
 
@@ -39,12 +36,10 @@ public class Main {
         if(max < sum){
             max = sum;
         }
-        
+
         for(int  i = 0 ;i<N;i++){
-            if(now <= x[i][0] && !visited[i]){
-                visited[i] = true;
+            if(now <= x[i][0]){
                 dfs(sum + x[i][2], x[i][1]);
-                visited[i] = false;
             }
         }
     }
