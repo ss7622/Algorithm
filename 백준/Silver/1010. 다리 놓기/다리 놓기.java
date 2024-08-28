@@ -24,7 +24,7 @@ public class Main {
     }
 
     static int combi(int n, int r){
-        if(dp[n][r] > 0){
+        if(dp[n][r] != 0){
             return dp[n][r];
         }
         if(n == r || r == 0){
