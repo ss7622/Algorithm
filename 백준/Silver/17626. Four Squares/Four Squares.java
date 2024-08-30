@@ -10,7 +10,7 @@ public class Main {
 
         N = Integer.parseInt(br.readLine());
 
-        dp= new int[N+100];
+        dp= new int[N+3];
 
         dp[1] = 1;
         dp[2] = 2;
