@@ -13,26 +13,23 @@ public class Main {
         for(int i = 0 ;i<T;i++) {
             N = Integer.parseInt(br.readLine());
 
-            dfs(0);
-            bw.write(cnt + "\n");
+            int dp[] = new int[N+3];
+
+            dp[1] = 1;
+            dp[2] = 2;
+            dp[3] = 4;
+            if(N > 3) {
+                for (int j = 4; j <=N;j++){
+                    dp[j] = dp[j-1] + dp[j-2] + dp[j-3];
+                }
+            }
+
+            bw.write(dp[N] + "\n");
             bw.flush();
 
             cnt = 0;
         }
 
 
-    }
-
-    static void dfs(int depth){
-        if(depth >= N) {
-            if (depth == N) {
-                cnt++;
-            }
-            return;
-        }
-
-        for(int  i =1;i<4;i++){
-            dfs(depth+i);
-        }
     }
 }
