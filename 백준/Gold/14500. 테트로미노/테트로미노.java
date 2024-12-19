@@ -30,7 +30,6 @@ public class Main {
                 if(!visit[i][j]){
                     visit[i][j] = true;
                     dfs(1,square[i][j],i,j,i,j);
-                    visit[i][j] = false;
                 }
             }
         }
