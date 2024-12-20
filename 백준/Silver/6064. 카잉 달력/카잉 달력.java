@@ -55,8 +55,4 @@ public class Main {
         }
         return result;
     }
-
-    public static int devide(int a, int b){
-        return (a-1) % b + 1;
-    }
 }
