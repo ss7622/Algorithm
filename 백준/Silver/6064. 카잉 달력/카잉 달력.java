@@ -1,32 +1,62 @@
-import java.util.Scanner;
+import java.io.*;
+import java.math.*;
+import java.lang.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
+    static List<Integer> remainder = new ArrayList<>();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int T = sc.nextInt();
-		
+        int T = Integer.parseInt(br.readLine());
 
-		for (int s = 0; s < T; s++) {
+        for(int  i = 0;i<T;i++){
+            remainder = new ArrayList<>();
+            StringTokenizer st = new StringTokenizer(br.readLine());
 
-			boolean check = false;
-			int m = sc.nextInt();
-			int n = sc.nextInt();
-			int x = sc.nextInt() - 1;
-			int y = sc.nextInt() - 1;
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
 
-			for (int i = x; i < (n * m); i += m) {
-				if (i % n == y) {
-					System.out.println(i + 1);
-					check = true;
-					break;
-				}
-			}
+            int to = least_multiple(a,b);
 
-			if (!check) {
-				System.out.println(-1);
+            int flag = 0;
 
-			}
-		}
-	}
+            for(int j=x;j<=to;j+=a){
+                if((j-y) % b == 0){
+                    System.out.println(j);
+                    flag = 1;
+                    break;
+                }
+            }
+            if(flag == 0){
+                System.out.println(-1);
+            }
+        }
+    }
+
+    public static int least_multiple(int a, int b){
+        int min = Math.min(a,b);
+
+        for(int i=2;i<=min;i++){
+            if(a%i==0 && b%i==0){
+                remainder.add(i);
+                a /= i;
+                b /= i;
+                i = 2;
+            }
+        }
+        int result = a * b;
+        for (Integer i : remainder) {
+            result *= i;
+        }
+        return result;
+    }
+
+    public static int devide(int a, int b){
+        return (a-1) % b + 1;
+    }
 }
