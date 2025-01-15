@@ -16,9 +16,6 @@ class Solution {
                     else if(count[i][j-1] == -1){
                         count[i][j] = count[i-1][j];
                     }
-                    else if(count[i-1][j] == -1 && count[i][j-1] == -1){
-                        count[i][j] = -1;
-                    }
                     else{
                         count[i][j] = (count[i-1][j] + count[i][j-1]) % 1000000007;
                     }
