@@ -1,67 +1,65 @@
-
+import java.util.*;
 import java.io.*;
-import java.lang.*;
-import java.util.Stack;
-import java.util.StringTokenizer;
-
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+
+    private static int cursor;
+    private static Stack<Character> left = new Stack<Character>();
+    private static Stack<Character> right = new Stack<Character>();
+
+    public static void main(String[] args) throws Exception {
+    
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        char[] input = br.readLine().toCharArray();
-
-        // 초기화
-        Stack<Character> leftStack = new Stack<>();
-        Stack<Character> rightStack = new Stack<>();
-        for (char c : input) {
-            leftStack.push(c);
+        String lineString = br.readLine();
+    
+        for(int i=0;i<lineString.length(); i++){
+            left.push(lineString.charAt(i));
         }
 
-        // 명령 시작
-        int directingCount = Integer.parseInt(br.readLine());
+        int cnt = Integer.parseInt(br.readLine());
+        for(int i=0;i<cnt;i++){
+            String cmdLine = br.readLine();
+            
+            char cmd = cmdLine.charAt(0);
 
-        for(int i=0;i<directingCount;i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            char[] direction = new char[st.countTokens()];
-            int index = 0;
-            while(st.hasMoreTokens()) {
-                direction[index++] = st.nextToken().charAt(0);
+            if(cmd == 'L'){
+                if(!left.isEmpty()){
+                    char c = left.pop();
+                    right.push(c);
+                }
             }
 
-            if(direction[0] == 'L' && !leftStack.isEmpty()) {
-                Character pop = leftStack.pop();
-                rightStack.push(pop);
+            else if(cmd == 'D'){
+                if(!right.isEmpty()){
+                    char c = right.pop();
+                    left.push(c);
+                }
+            }
+            
+            else if (cmd == 'B'){
+                if(!left.isEmpty()){            
+                    left.pop();
+                }
             }
 
-            else if(direction[0] == 'D' && !rightStack.isEmpty()) {
-                Character pop = rightStack.pop();
-                leftStack.push(pop);
+            else if (cmd == 'P'){
+                left.push(cmdLine.charAt(2));
             }
-
-            else if(direction[0] == 'B' && !leftStack.isEmpty()) {
-                leftStack.pop();
-            }
-
-            else if(direction[0] == 'P') {
-                leftStack.push(direction[1]);
-            }
-
         }
 
-        // 출력 시작
-        StringBuilder sb = new StringBuilder();
-
-        while(!leftStack.isEmpty()) {
-            char pop = leftStack.pop();
-            rightStack.push(pop);
+        while(!left.isEmpty()){
+            char c = left.pop();
+            right.push(c);
         }
 
-        while(!rightStack.isEmpty()) {
-            sb.append(rightStack.pop());
+        while(!right.isEmpty()){
+            bw.write(right.pop());
         }
 
-        System.out.println(sb.toString());
+        bw.flush();
+		bw.close(); 
 
     }
 }
