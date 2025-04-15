@@ -44,6 +44,5 @@ public class Main {
         }
 
         devide(x,left,mid-1);
-        devide(x,mid+1,right);
     }
 }
