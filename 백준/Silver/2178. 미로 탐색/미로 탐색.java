@@ -1,5 +1,6 @@
 import java.io.*;
 import java.lang.*;
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -30,7 +31,7 @@ public class Main {
                 miro[i][j] = Integer.parseInt(line.charAt(j)+"");
             }
         }
-        Queue<int[]> queue = new LinkedList<>();
+        Queue<int[]> queue = new ArrayDeque<>();
         queue.add(new int[] {0, 0});
         bfs(1, queue);
         System.out.println(result);
@@ -40,7 +41,7 @@ public class Main {
         if(result != 0){
             return;
         }
-        Queue<int[]> nextQueue = new LinkedList<>();
+        Queue<int[]> nextQueue = new ArrayDeque<>();
         while(!queue.isEmpty()){
             int[] cur = queue.poll();
             for(int i=0;i<4;i++){
