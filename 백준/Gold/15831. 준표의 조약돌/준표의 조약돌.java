@@ -29,7 +29,11 @@ public class Main {
         bIndex.add(N);
 
         if(bMax >= bIndex.size()-2){
-            System.out.println(N);
+            if(N - (bIndex.size()-2) >= WMin) {
+                System.out.println(N);
+                return;
+            }
+            System.out.println("0");
             return;
         }
         int max = 0;
@@ -42,7 +46,7 @@ public class Main {
             if(flag == 1){
                 startIdx++;
             }
-            if(i >= bMax && bIndex.get(i+1)-bIndex.get(startIdx)-bMax >= WMin){
+            if(i >= bMax && bIndex.get(i+1)-bIndex.get(startIdx)-bMax-1 >= WMin){
                 max = Math.max(max,bIndex.get(i+1)-1-bIndex.get(startIdx));
             }
         }
