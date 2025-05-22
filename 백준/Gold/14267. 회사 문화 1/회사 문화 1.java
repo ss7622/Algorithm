@@ -28,9 +28,12 @@ public class Main {
         for(int i=1;i<=n;i++){
             dp[i] += dp[myUpper[i-1]];
         }
+        
+        StringBuilder sb = new StringBuilder();
 
         for(int i=1;i<=n;i++){
-            System.out.print(dp[i]+ " ");
+            sb.append(dp[i]).append(" ");
         }
+        System.out.println(sb);
     }
 }
