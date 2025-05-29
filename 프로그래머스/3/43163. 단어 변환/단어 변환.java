@@ -1,48 +1,43 @@
 import java.util.*;
-
+import java.lang.*;
 class Solution {
-    public int solution(String begin, String target, String[] wordss) {
+    public int solution(String begin, String target, String[] words) {
+        Queue<String[]> que = new LinkedList<>();
         Set<String> visited = new HashSet<>();
-        Queue<int[]> que = new LinkedList<>();
-        String[] words = new String[wordss.length+1];
-        words[0] = begin;
-        int flag = 1;
-        for(String word : wordss){
-            words[flag++] = word;
-        }
-        que.add(new int[] {0,0});
+        
+        que.add(new String[] {begin,"0"});
         visited.add(begin);
         
         while(!que.isEmpty()){
-            int[] now = que.poll();
+            String now[] = que.poll();
             
-            if(words[now[0]].equals(target)){
-                return now[1];
+            if(now[0].equals(target)){
+                return Integer.parseInt(now[1]);
             }
             
             for(int i=0;i<words.length;i++){
-                if(!visited.contains(words[i]) && getChai(words[now[0]], words[i])){
+                if(check(now[0], words[i]) && !visited.contains(words[i])){
                     visited.add(words[i]);
-                    que.add(new int[] {i,now[1]+1});
+                    que.add(new String[] {words[i], String.valueOf(Integer.parseInt(now[1])+1)});
                 }
             }
         }
-        return 0;
         
+        
+        return 0;
     }
     
-    public boolean getChai(String a, String b){
+    public boolean check(String a, String b){
         char[] a2 = a.toCharArray();
         char[] b2 = b.toCharArray();
-        int sum = 0;
+        int cnt = 0;
         
-        for(int i=0;i<a2.length;i++){
-            if(a2[i] != b2[i]){
-                sum++;
+        for(int i = 0;i<a2.length;i++){
+            if(a2[i] == b2[i]){
+                cnt++;
             }
         }
-        
-        if(sum == 1){
+        if(cnt == a2.length-1){
             return true;
         }
         return false;
