@@ -1,19 +1,16 @@
 class Solution {
-    static int[] child;
     static boolean[] visited;
+    static int[] child;
     public int solution(int n, int[][] wires) {
         visited = new boolean[n+1];
         child = new int[n+1];
-        
         visited[wires[0][0]] = true;
         dfs(wires[0][0], wires);
-        
         int min = Integer.MAX_VALUE;
         
-        for(int i=1;i<n+1;i++){
-            min = Math.min( Math.abs((n - child[i]) - child[i]), min);
+        for(int i=1;i<=n;i++){
+            min = Math.min(min,  Math.abs(  (n - child[i]) - child[i]       )        );
         }
-        
         return min;
     }
     
@@ -24,7 +21,6 @@ class Solution {
                 visited[wires[i][1]] = true;
                 cnt += dfs(wires[i][1], wires);
             }
-            
             if(wires[i][1] == now && !visited[wires[i][0]]){
                 visited[wires[i][0]] = true;
                 cnt += dfs(wires[i][0], wires);
