@@ -1,72 +1,69 @@
 import java.util.*;
 class Solution {
-        static Map<Integer, List<node>> map;
-        public int solution(int n, int s, int a, int b, int[][] fares) {
-            map = new HashMap<>();
-            for(int i=1;i<=n;i++){
-                map.put(i, new ArrayList<node>());
-            }
-
-            for(int i=0;i<fares.length;i++){
-                map.get(fares[i][0]).add(new node(fares[i][1],fares[i][2]));
-                map.get(fares[i][1]).add(new node(fares[i][0],fares[i][2]));
-            }
-            int min = Integer.MAX_VALUE;
-
-            int[][] dist = new int[3][n+1];
-            Arrays.fill(dist[0],Integer.MAX_VALUE);
-            Arrays.fill(dist[1],Integer.MAX_VALUE);
-            Arrays.fill(dist[2],Integer.MAX_VALUE);
-
-            dist[0] = dijkstra(s,n,n);
-            dist[1] = dijkstra(a,n,n);
-            dist[2] = dijkstra(b,n,n);
-
-
-            for(int i=1;i<=n;i++){
-                int end = i;
-                min = Math.min(min,dist[0][end] + dist[1][end] + dist[2][end]);
-            }
-            return min;
-        }
-
-        public int[] dijkstra(int start, int end, int n){
-            Queue<node> pq = new PriorityQueue<>();
-            int[] dist = new int[n+1];
-            Arrays.fill(dist,Integer.MAX_VALUE);
-
-            dist[start] = 0;
-            pq.add(new node(start,0));
-            while(!pq.isEmpty()){
-                node cur = pq.poll();
-                int nowIdx = cur.index;
-                int nowDist = cur.cost;
-
-                if(nowDist > dist[nowIdx]) continue;
-
-                List<node> nodes = map.get(nowIdx);
-                for(node nextNode : nodes){
-                    if(dist[nextNode.index] > nowDist + nextNode.cost){
-                        dist[nextNode.index] = nowDist + nextNode.cost;
-                        pq.add(new node(nextNode.index,nowDist + nextNode.cost));
-                    }
-                }
-            }
-
-            return dist;
-        }
-
-        public class node implements Comparable<node> {
-            int index;
-            int cost;
-
-            public node(int index, int cost) {
-                this.index = index;
-                this.cost = cost;
-            }
-            @Override
-            public int compareTo(node o){
-                return cost - o.cost;
-            }
+    class node{
+        int nextIdx;
+        int pay;
+        
+        public node(int a, int b){
+            this.nextIdx = a;
+            this.pay = b;
         }
     }
+    public int solution(int n, int s, int a, int b, int[][] fares) {
+        Map<Integer, List<node>> map = new HashMap<>();
+        
+        for(int i=1;i<=n;i++){
+            map.put(i, new ArrayList<>());
+        }
+        
+        for(int i=0;i<fares.length;i++){
+            map.get(fares[i][0]).add(new node(fares[i][1], fares[i][2]));
+            map.get(fares[i][1]).add(new node(fares[i][0], fares[i][2]));
+        }
+        
+        int[] sdi = dijkstra(s, map, n);
+        int[] adi = dijkstra(a, map, n);
+        int[] bdi = dijkstra(b, map, n);
+        
+        int min = Integer.MAX_VALUE;
+
+        for(int i=1;i<=n;i++){
+            min = Math.min(sdi[i] + adi[i] + bdi[i], min);
+        }
+        
+        return min;
+        
+    }
+    
+    public int[] dijkstra(int start, Map<Integer, List<node>> map, int n){
+        Queue<node> que = new LinkedList<>();
+        
+        que.add(new node(start, 0));
+        
+        int[] dp = new int[n+1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[start] = 0;
+        
+        while(!que.isEmpty()){
+            
+            node now = que.poll();
+            
+            int nowIdx = now.nextIdx;
+            int cost = now.pay;
+            
+            if(dp[nowIdx] < cost) continue;
+            
+            List<node> toNodes = map.get(nowIdx);
+            
+            for(node toNode : toNodes){
+                if(toNode.pay + cost < dp[toNode.nextIdx]){
+                    dp[toNode.nextIdx] = toNode.pay + cost;
+                    que.add(new node(toNode.nextIdx, toNode.pay + cost));
+                }
+            
+            }
+            
+        }
+        return dp;
+    }
+}
