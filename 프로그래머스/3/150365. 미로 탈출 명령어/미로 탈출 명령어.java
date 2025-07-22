@@ -1,49 +1,41 @@
 class Solution {
-
-    private final int[] dx = {1, 0, 0, -1};              // d, l, r, u
-    private final int[] dy = {0, -1, 1, 0};
-    private final char[] dir = {'d', 'l', 'r', 'u'};     // 사전순
-
-    private String answer = "impossible";
-    private boolean found = false;
-    private int targetX, targetY, limit, rows, cols;
+    int[] dx = {1, 0, 0, -1}; // d, l, r, u
+    int[] dy = {0, -1, 1, 0};
+    char[] dir = {'d', 'l', 'r', 'u'};
+    String answer = "impossible";
+    boolean found = false;
 
     public String solution(int n, int m, int x, int y, int r, int c, int k) {
-        rows = n;
-        cols = m;
-        targetX = r;
-        targetY = c;
-        limit = k;
+        int dist = Math.abs(x - r) + Math.abs(y - c);
+        if (dist > k || (k - dist) % 2 != 0) return "impossible";
 
-        dfs(x, y, 0, new StringBuilder(), 0);
+        dfs(n, m, x, y, r, c, k, 0, new StringBuilder());
         return answer;
     }
 
-    private void dfs(int x, int y, int depth, StringBuilder path, int start) {
+    private void dfs(int n, int m, int x, int y, int r, int c, int k, int depth, StringBuilder path) {
         if (found) return;
 
-        int dist = Math.abs(x - targetX) + Math.abs(y - targetY);
+        int dist = Math.abs(x - r) + Math.abs(y - c);
+        if (depth + dist > k) return;
 
-        // pruning
-        if (depth + dist > limit || (limit - depth - dist) % 2 != 0) return;
-
-        if (depth == limit) {
-            if (x == targetX && y == targetY) {
+        if (depth == k) {
+            if (x == r && y == c) {
                 answer = path.toString();
                 found = true;
             }
             return;
         }
 
-        for (int i = start; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
 
-            if (nx >= 1 && nx <= rows && ny >= 1 && ny <= cols) {
-                path.append(dir[i]);
-                dfs(nx, ny, depth + 1, path, 0); // 다음 depth는 다시 0부터
-                path.deleteCharAt(path.length() - 1);
-            }
+            if (nx < 1 || nx > n || ny < 1 || ny > m) continue;
+
+            path.append(dir[i]);
+            dfs(n, m, nx, ny, r, c, k, depth + 1, path);
+            path.deleteCharAt(path.length() - 1);
         }
     }
 }
