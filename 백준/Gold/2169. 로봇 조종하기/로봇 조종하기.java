@@ -51,6 +51,6 @@ public class Main {
 
 		// System.out.println(Arrays.deepToString(dp));
 		
-		System.out.println(Math.max(dp[n-1][m-1][0],Math.max(dp[n-1][m-1][1], dp[n-1][m-1][2])));
+		System.out.println(Math.max(dp[n-1][m-1][0], dp[n-1][m-1][1]));
 	}
 }
