@@ -1,31 +1,31 @@
-import java.util.*;
-
-// 같을 때는 왼쪽으로 탐색하기
 class Solution {
+
     public long solution(int n, int[] times) {
-        long right = Long.MAX_VALUE;
-        long left = 1;
-        while(left <= right){
-            long mid = left + (right - left) / 2;
-
-            if(!check(times, n, mid)){
-                right = mid-1;
-                continue;
-            }
-            left = mid+1;
-        }
-        return left;
+        long result = bSearch(1L, 1000000000000000000L, times, n);
+        return result+1;
     }
-    
-    public boolean check(int[] times, int n, long now){
-        long cnt = 0;
-
-        for(int t : times){
-            cnt += now / t;
-            if(cnt >= n){
-                return false;
+    public long bSearch(long left, long right, int[] times, int n){
+        long mid = 0L;
+        while(left <= right){
+            mid = (left + right) / 2;
+            
+            long sum = 0;
+            
+            for(int time : times){
+                sum += mid / time;
             }
+            
+            if(sum >= n){
+                right = mid -1;
+            }
+            
+            else{
+                left = mid+1;
+            }
+            mid = (left + right) / 2;
+
+            
         }
-        return true;
+        return mid;
     }
 }
